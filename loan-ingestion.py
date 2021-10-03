@@ -55,6 +55,9 @@ with DAG(
             'age':'Age'
         }, inplace=True)
 
+        # convert number of dependents to int
+        df['NumberOfDependents'] = df['NumberOfDependents'].astype('int64', errors='ignore')
+        
         #add insert date
         df['InsertDate'] = pd.to_datetime(insert_date)
 

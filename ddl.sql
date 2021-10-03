@@ -20,7 +20,7 @@ CREATE TABLE credit.loan_application (
 	NumberOfTimes90DaysLate int,
 	NumberRealEstateLoansOrLines int,
 	NumberOfTime60To89DaysPastDueNotWorse int,
-	NumberOfDependents float,
+	NumberOfDependents int,
 	InsertDate datetime NOT NULL
 );
 
