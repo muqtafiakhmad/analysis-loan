@@ -25,3 +25,5 @@ CREATE TABLE credit.loan_application (
 );
 
 CREATE INDEX loan_application_insert_date ON credit.loan_application(InsertDate);
+
+SHOW CREATE TABLE credit.loan_application;
