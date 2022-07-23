@@ -12,7 +12,7 @@ CREATE TABLE credit.loan_application (
 	No int,
 	SeriousDlqin2yrs int,
 	RevolvingUtilizationOfUnsecuredLines float,
-	Age float,
+	Age int,
 	NumberOfTime30To59DaysPastDueNotWorse int,
 	DebtRatio float,
 	MonthlyIncome double,

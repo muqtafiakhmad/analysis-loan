@@ -43,29 +43,39 @@ with DAG(
         # construct pd from file list
         import pandas as pd
 
-        df_list = list(map(lambda file_name: pd.read_csv(file_name), file_list))
+        df_list = list(map(lambda file_name: pd.read_csv(
+            file_name, 
+            dtype = {
+                'No':'Int32',
+                'SeriousDlqin2yrs':'Int32',
+                'RevolvingUtilizationOfUnsecuredLines': 'Float32',
+                'Age':'Int32',
+                'age':'Int32',
+                'NumberOfTime30To59DaysPastDueNotWorse':'Int32',
+                'NumberOfTime30-59DaysPastDueNotWorse':'Int32',
+                'DebtRatio':'Float32',
+                'MonthlyIncome':'Float64',
+                'NumberOfOpenCreditLinesAndLoans':'Int32',
+                'NumberOfTimes90DaysLate':'Int32',
+                'NumberRealEstateLoansOrLines':'Int32',
+                'NumberOfTime60To89DaysPastDueNotWorse':'Int32',
+                'NumberOfTime60-89DaysPastDueNotWorse':'Int32',
+                'NumberOfDependents':'Int32'
+            }
+        ), file_list))
 
         df = pd.concat(df_list)
 
         # rename columns
         df.rename(columns={
-            # there is an unnamed col, assign as "No"
             'Unnamed: 0':'No',
-            # change column naming to title case
-            'age':'Age'
-        }, inplace=True)
-
-        # convert number of dependents to int
-        df['NumberOfDependents'] = df['NumberOfDependents'].astype('int64', errors='ignore')
-        
-        #add insert date
-        df['InsertDate'] = pd.to_datetime(insert_date)
-
-        # rename columns since mssql does not allow dash in column name
-        df.rename(columns={
+            'age':'Age',
             'NumberOfTime30-59DaysPastDueNotWorse':'NumberOfTime30To59DaysPastDueNotWorse',
             'NumberOfTime60-89DaysPastDueNotWorse':'NumberOfTime60To89DaysPastDueNotWorse'
         }, inplace=True)
+        
+        #add insert date
+        df['InsertDate'] = pd.to_datetime(insert_date)
 
         # construct connection to mysql
         connection_string = 'mysql+mysqlconnector://{user}:{password}@{host}/{dbname}'.format(
